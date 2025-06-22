@@ -3,9 +3,12 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import generics
+from .models import Role
 from .models import Department
 from .serializers import DepartmentSerializer
 from django.http import JsonResponse
+from .serializers import RoleSerializer
 
 def home(request):
     return JsonResponse({'message': 'Welcome to Department Management API!'})
@@ -46,3 +49,13 @@ def department_detail(request, pk):
     elif request.method == 'DELETE':
         department.delete()
         return Response({'message': 'Department deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+
+
+class RoleListCreateView(generics.ListCreateAPIView):
+    queryset = Role.objects.all()
+    serializer_class = RoleSerializer
+
+# Retrieve, update, or delete a role
+class RoleDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Role.objects.all()
+    serializer_class = RoleSerializer

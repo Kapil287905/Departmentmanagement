@@ -2,54 +2,52 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-const API_URL = 'http://127.0.0.1:8000/api/departments/'
+const API_URL = 'http://127.0.0.1:8000/api/role/'
 
-const DepartmentListPage = () => {
-  const [departments, setDepartments] = useState([])
+const RoleListPage = () => {
+  const [Roles, setRoles] = useState([])
 
-  const fetchDepartments = async () => {
+  const fetchRoles = async () => {
     const res = await axios.get(API_URL)
-    setDepartments(res.data)
+    setRoles(res.data)
     console.log(res.data)
   }
 
   useEffect(() => {
-    fetchDepartments()
+    fetchRoles()
   }, [])
 
   const handleDelete = async (id) => {
     await axios.delete(`${API_URL}${id}/`)
-    fetchDepartments()
+    fetchRoles()
   }
 
   return (
     <>
     <div className="title">
         <i className="uil uil-tachometer-fast-alt"></i>
-        <span className="text">Department Management</span>
+        <span className="text">Role Management</span>
     </div>    
     <div className="table-responsive">
       <table className="table table-bordered">
         <thead className="table-light">
           <tr>
             <th>Sr.No</th>
-            <th>Department Name</th>
-            <th>Description</th>          
+            <th>Role Name</th>       
             <th>Edit</th>
             <th>Delete</th>
           </tr>
         </thead>
         <tbody>
-          {departments.map((dept, index) => (
-            <tr key={dept.dept_id}>
+          {Roles.map((role, index) => (
+            <tr key={role.id}>
               <td>{index + 1}</td>
-              <td>{dept.dept_name}</td>
-              <td>{dept.description}</td>
+              <td>{role.role}</td>
               <td>
-                <Link to={`/edit/${dept.dept_id}`} className="btn btn-warning btn-sm me-2">Edit</Link>
+                <Link to={`/editrole/${role.id}`} className="btn btn-warning btn-sm me-2">Edit</Link>
               </td>
               <td>
-                <button onClick={() => handleDelete(dept.dept_id)} className="btn btn-danger btn-sm">Delete</button>
+                <button onClick={() => handleDelete(role.id)} className="btn btn-danger btn-sm">Delete</button>
               </td>
             </tr>
           ))}
@@ -60,4 +58,4 @@ const DepartmentListPage = () => {
   )
 }
 
-export default DepartmentListPage
+export default RoleListPage

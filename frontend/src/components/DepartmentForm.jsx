@@ -37,42 +37,52 @@ const DepartmentFormPage = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <>
+    <div class="title">
+      <i class={id ? "uil uil-edit" : "uil uil-plus"}></i>
+      <span class="text">{id ? "Update" : "Add"} Department</span>
+    </div>
+    <div class="card">
+    <div class="card-body">
+      <form onSubmit={handleSubmit}>
       <div className="mb-3">
-        <label className="form-label">Department Name</label>
-        <input
-          type="text"
-          name="dept_name"
-          className="form-control"
-          value={form.dept_name}
-          onChange={handleChange}
-          required
-        />
+      <label className="form-label">Department Name</label>
+      <input
+      type="text"
+      name="dept_name"
+      className="form-control"
+      value={form.dept_name}
+      onChange={handleChange}
+      required
+      />
       </div>
       <div className="mb-3">
-        <label className="form-label">Description</label>
-        <input
-          type="text"
-          name="description"
-          className="form-control"
-          value={form.description}
-          onChange={handleChange}
-          required
-        />
+      <label className="form-label">Description</label>
+      <input
+      type="text"
+      name="description"
+      className="form-control"
+      value={form.description}
+      onChange={handleChange}
+      required
+      />
       </div>
       <div className="form-check mb-3">
-        <input
-          type="checkbox"
-          className="form-check-input"
-          id="status"
-          name="status"
-          checked={form.status}
-          onChange={handleChange}
-        />
-        <label className="form-check-label" htmlFor="status">Active</label>
+      <input
+      type="checkbox"
+      className="form-check-input"
+      id="status"
+      name="status"
+      checked={form.status}
+      onChange={handleChange}
+      />
+      <label className="form-check-label" htmlFor="status">Active</label>
       </div>
       <button type="submit" className="btn btn-success">{id ? "Update" : "Add"} Department</button>
-    </form>
+      </form>
+    </div>
+    </div>
+    </>
   )
 }
 
