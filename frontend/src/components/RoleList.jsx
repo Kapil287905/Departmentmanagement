@@ -8,9 +8,17 @@ const RoleListPage = () => {
   const [Roles, setRoles] = useState([])
 
   const fetchRoles = async () => {
-    const res = await axios.get(API_URL)
-    setRoles(res.data)
-    console.log(res.data)
+    try {
+      const token = localStorage.getItem('access'); // Get token from storage
+      const response = await axios.get(API_URL, {
+        headers: {
+          Authorization: `Bearer ${token}`, // 🔐 Include the token here
+        },
+      });
+      setRoles(response.data);
+    } catch (error) {
+      console.error('Error fetching role:', error);
+    }
   }
 
   useEffect(() => {
@@ -24,18 +32,25 @@ const RoleListPage = () => {
 
   return (
     <>
-    <div className="title">
-        <i className="uil uil-tachometer-fast-alt"></i>
-        <span className="text">Role Management</span>
-    </div>    
+    <div className='row' style={{marginBottom:'20px',marginTop:'10px'}}>
+      <div className='col-xl-6'>
+        <div className="title">
+            <i className="uil uil-users-alt"></i>
+            <span className="text">Role Management</span>
+        </div>
+      </div>
+      <div className='col-xl-6'>
+        <a href="/roleadd"><button className='btn btn-success' style={{marginTop:'2px',float:'right'}}><i className="uil uil-plus fs-5"></i> Create Role</button></a>
+      </div>
+    </div>        
     <div className="table-responsive">
       <table className="table table-bordered">
-        <thead className="table-light">
+        <thead className="table-dark">
           <tr>
-            <th>Sr.No</th>
-            <th>Role Name</th>       
-            <th>Edit</th>
-            <th>Delete</th>
+            <th style={{width:'5%'}}>Sr.No</th>
+            <th style={{width:'85%'}}>Role Name</th>       
+            <th style={{width:'5%'}}>Edit</th>
+            <th style={{width:'5%'}}>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -44,10 +59,10 @@ const RoleListPage = () => {
               <td>{index + 1}</td>
               <td>{role.role}</td>
               <td>
-                <Link to={`/editrole/${role.id}`} className="btn btn-warning btn-sm me-2">Edit</Link>
+                <Link to={`/editrole/${role.id}`} className="btn btn-warning btn-sm me-2"><i className="uil uil-edit-alt"></i></Link>
               </td>
               <td>
-                <button onClick={() => handleDelete(role.id)} className="btn btn-danger btn-sm">Delete</button>
+                <button onClick={() => handleDelete(role.id)} className="btn btn-danger btn-sm"><i className="uil uil-trash-alt"></i></button>
               </td>
             </tr>
           ))}

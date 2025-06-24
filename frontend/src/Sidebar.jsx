@@ -50,29 +50,17 @@ const Sidebar = () => {
                 <div className="offcanvas-body">
                     <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <li className="nav-item">
-                            <a className="nav-link active text-white" aria-current="page" href="/" onClick={handleToggleOffcanvas}>
-                                <i className="uil uil-tachometer-fast-alt"></i>
-                                <span className="link-name ms-2">View Departments</span>
+                            <a className="nav-link active text-white" aria-current="page" href="/department" onClick={handleToggleOffcanvas}>
+                                <i className="uil uil-building"></i>
+                                <span className="link-name ms-2">Departments</span>
                             </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link text-white" href="/add" onClick={handleToggleOffcanvas}>
-                                <i className="uil uil-plus"></i>
-                                <span className="link-name ms-2">Add Department</span>
-                            </a>
-                        </li>
+                        </li>                        
                         <li className="mb-2">
-                            <a href="/role" className="text-decoration-none text-white d-flex align-items-center">
-                                <i className="uil uil-tachometer-fast-alt fs-5"></i>
-                                <span className="link-name ms-3">View role</span>
+                            <a href="/role" className="text-decoration-none text-white d-flex align-items-center" onClick={handleToggleOffcanvas}>
+                                <i className="uil uil-users-alt fs-5"></i>
+                                <span className="link-name ms-3">Role</span>
                             </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link text-white" href="/roleadd" onClick={handleToggleOffcanvas}>
-                                <i className="uil uil-plus"></i>
-                                <span className="link-name ms-2">Add Role</span>
-                            </a>
-                        </li>
+                        </li>                        
                     </ul>
                     <ul className="logout-mode navbar-nav">
                         {/* You can add a logout button or mode toggle here */}
@@ -94,29 +82,17 @@ const Sidebar = () => {
                 <div className="menu-items">
                     <ul className="nav-links list-unstyled" style={{ paddingLeft: "0rem" }}>
                         <li className="mb-2">
-                            <a href="/" className="text-decoration-none text-white d-flex align-items-center">
-                                <i className="uil uil-tachometer-fast-alt fs-5"></i>
-                                <span className="link-name ms-3">View Departments</span>
+                            <a href="/department" className="text-decoration-none text-white d-flex align-items-center">
+                                <i className="uil uil-building fs-5"></i>
+                                <span className="link-name ms-3">Departments</span>
                             </a>
-                        </li>
-                        <li className="mb-2">
-                            <a href="/add" className="text-decoration-none text-white d-flex align-items-center">
-                                <i className="uil uil-plus fs-5"></i>
-                                <span className="link-name ms-3">Add Department</span>
-                            </a>
-                        </li>
+                        </li>                        
                         <li className="mb-2">
                             <a href="/role" className="text-decoration-none text-white d-flex align-items-center">
-                                <i className="uil uil-tachometer-fast-alt fs-5"></i>
-                                <span className="link-name ms-3">View role</span>
+                                <i className="uil uil-users-alt fs-5"></i>
+                                <span className="link-name ms-3">Role</span>
                             </a>
-                        </li>
-                        <li className="mb-2">
-                            <a href="/roleadd" className="text-decoration-none text-white d-flex align-items-center">
-                                <i className="uil uil-plus fs-5"></i>
-                                <span className="link-name ms-3">Add Role</span>
-                            </a>
-                        </li>
+                        </li>                        
                     </ul>
 
                     <ul className="logout-mode list-unstyled mt-auto">

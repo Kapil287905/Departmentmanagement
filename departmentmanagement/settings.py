@@ -40,10 +40,26 @@ INSTALLED_APPS = [
     'app',
     'rest_framework',
     'corsheaders',
+    'rest_framework_simplejwt',
 
 ]
 
 AUTH_USER_MODEL = 'app.CustomUser'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+from datetime import timedelta
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

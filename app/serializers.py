@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import Department,Role,CustomUser,Task,Performance,Leave
 
 class DepartmentSerializer(serializers.ModelSerializer):
@@ -43,3 +44,13 @@ class LeaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Leave
         fields = '__all__'
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims (optional)
+        token['username'] = user.username
+        token['role'] = user.role.role if user.role else None
+        return token

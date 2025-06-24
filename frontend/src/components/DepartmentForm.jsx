@@ -5,21 +5,33 @@ import axios from 'axios'
 const API_URL = 'http://127.0.0.1:8000/api/departments/'
 
 const DepartmentFormPage = () => {
-  const { id } = useParams()
-  const navigate = useNavigate()
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     dept_name: '',
     description: '',
     status: true,
-  })
+  });
 
   useEffect(() => {
+    const token = localStorage.getItem('access');
+    
     if (id) {
-      axios.get(`${API_URL}${id}/`).then((res) => {
-        setForm(res.data)
+      axios.get(`http://127.0.0.1:8000/api/departments/${id}/`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       })
+      .then((res) => {
+        setForm(res.data);
+      })
+      .catch((err) => {
+        console.error('Error fetching department:', err);
+        alert('Unauthorized - Please login again');
+        navigate('/login');
+      });
     }
-  }, [id])
+  }, [id, navigate]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -27,23 +39,47 @@ const DepartmentFormPage = () => {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (id) {
-      await axios.put(`${API_URL}${id}/`, form)
-    } else {
-      await axios.post(API_URL, form)
+    e.preventDefault();
+    const token = localStorage.getItem('access'); 
+    const { dept_name, description, status } = form; 
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      if (id) {        
+        // Edit mode
+        await axios.put(`http://127.0.0.1:8000/api/departments/${id}/`, {
+          dept_name,
+          description,
+          status
+        }, config);
+      } else {
+        // Create mode
+        await axios.post(`http://127.0.0.1:8000/api/departments/`, {
+          dept_name,
+          description,
+          status
+        }, config);
+      }
+
+      navigate('/department');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Unauthorized or submission error. Check token and permissions.');
     }
-    navigate('/')
-  }
+  };
 
   return (
     <>
-    <div class="title">
-      <i class={id ? "uil uil-edit" : "uil uil-plus"}></i>
-      <span class="text">{id ? "Update" : "Add"} Department</span>
+    <div className="title">
+      <i className={id ? "uil uil-edit" : "uil uil-plus"}></i>
+      <span className="text">{id ? "Update" : "Add"} Department</span>
     </div>
-    <div class="card">
-    <div class="card-body">
+    <div className="card">
+    <div className="card-body">
       <form onSubmit={handleSubmit}>
       <div className="mb-3">
       <label className="form-label">Department Name</label>
